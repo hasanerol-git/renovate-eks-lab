@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^terraform\\/addons\\.tf$/"
+      ],
+      "matchStrings": [
+        "# renovate: eksAddonsFilter=(?<packageName>\\{[^\\r\\n]+\\})\\s+addon_version\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "aws-eks-addon",
+      "versioningTemplate": "aws-eks-addon"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["aws-eks-addon"],
+      "overrideDepName": "{{replace '.*\"addonName\":\"([^\"]+)\".*' '$1' depName}}",
+      "groupName": "AWS EKS managed add-ons"
+    }
+  ]
+}
