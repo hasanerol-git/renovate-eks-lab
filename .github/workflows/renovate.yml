@@ -1,3 +1,44 @@
+# name: Renovate EKS Add-ons
+
+# on:
+#   workflow_dispatch:
+
+# permissions:
+#   contents: read
+#   id-token: write
+
+# jobs:
+#   renovate:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v6.3.0
+#         with:
+#           role-to-assume: ${{ secrets.AWS_RENOVATE_ROLE_ARN }}
+#           aws-region: eu-west-1
+
+#       - name: Verify AWS identity
+#         run: aws sts get-caller-identity
+
+#       - name: Run Renovate OSS
+#         uses: renovatebot/github-action@v46.3.7
+#         with:
+#           token: ${{ secrets.RENOVATE_TOKEN }}
+#         env:
+#           RENOVATE_PLATFORM: github
+#           RENOVATE_REPOSITORIES: ${{ github.repository }}
+#           RENOVATE_ONBOARDING: "false"
+#           RENOVATE_REQUIRE_CONFIG: required
+#           AWS_REGION: eu-west-1
+#           LOG_LEVEL: debug
+
+
+
+
 name: Renovate EKS Add-ons
 
 on:
@@ -14,6 +55,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Debug OIDC claims
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const token = await core.getIDToken('sts.amazonaws.com');
+            const claims = JSON.parse(
+              Buffer.from(token.split('.')[1], 'base64url').toString()
+            );
+            console.log("Subject:", claims.sub);
+            console.log("Audience:", claims.aud);
+            console.log("Issuer:", claims.iss);
+            console.log("Repository:", claims.repository);
+            console.log("Branch:", claims.ref);
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6.3.0
