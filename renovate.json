@@ -18,7 +18,6 @@
   "packageRules": [
     {
       "matchDatasources": ["aws-eks-addon"],
-      "overrideDepName": "{{replace '.*\"addonName\":\"([^\"]+)\".*' '$1' depName}}",
       "groupName": "AWS EKS managed add-ons"
     }
   ]
