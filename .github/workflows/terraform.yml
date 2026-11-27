@@ -5,9 +5,9 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'terraform/**'
-      - '.github/workflows/terraform.yml'
+    # paths:
+    #   - 'terraform/**'
+    #   - '.github/workflows/terraform.yml'
 
   push:
     branches:
