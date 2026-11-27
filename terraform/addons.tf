@@ -5,7 +5,7 @@ resource "aws_eks_addon" "vpc_cni" {
   addon_name   = "vpc-cni"
 
   # renovate: eksAddonsFilter={"kubernetesVersion":"1.34","addonName":"vpc-cni","region":"eu-west-1"}
-  addon_version = "v1.23.2-eksbuild.12"
+  addon_version = "v1.23.3-eksbuild.2"
 
   depends_on = [
     aws_eks_cluster.main
@@ -18,7 +18,7 @@ resource "aws_eks_addon" "kube_proxy" {
   addon_name   = "kube-proxy"
 
   # renovate: eksAddonsFilter={"kubernetesVersion":"1.34","addonName":"kube-proxy","region":"eu-west-1"}
-  addon_version = "v1.34.6-eksbuild.64"
+  addon_version = "v1.34.6-eksbuild.69"
 
   depends_on = [
     aws_eks_cluster.main
@@ -31,7 +31,7 @@ resource "aws_eks_addon" "coredns" {
   addon_name   = "coredns"
 
   # renovate: eksAddonsFilter={"kubernetesVersion":"1.34","addonName":"coredns","region":"eu-west-1"}
-  addon_version = "v1.13.2-eksbuild.68"
+  addon_version = "v1.13.2-eksbuild.75"
 
   depends_on = [
     aws_eks_node_group.main
